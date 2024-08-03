@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models;
 
-public partial class Vehicle
+public class Vehicle
 {
-    public int Id { get; set; }
+    [Key]
+    public int VehicleId { get; set; }
 
-    public required string Name { get; set; }
+    [StringLength(128)]
+    public required string OwnerName { get; set; }
 
-    public required string Manufacturer { get; set; }
+    [ForeignKey("ManufacturerId")]
+    public required int ManufacturerId { get; set; }
+    public virtual Manufacturer? Manufacturer { get; set; }
+    
 
-    public required string YearModel { get; set; }
+    public required int Year { get; set; }
 
-    public required float Weight { get; set; }
+    // We use grams so we won't need floating point
+    public required int WeightInGrams { get; set; }
 }

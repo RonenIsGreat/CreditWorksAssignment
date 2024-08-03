@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models;
 
-public partial class Manufacturer
+public class Manufacturer
 {
-    public int Id { get; set; }
+    [Key]
+    public int ManufacturerId { get; set; }
 
+    [StringLength(128)]
     public required string Name { get; set; }
 
 }

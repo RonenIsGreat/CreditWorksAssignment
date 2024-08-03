@@ -8,69 +8,74 @@ namespace backend.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class ManufacturerController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        // GET /Manufacturer
+        // GET /Category
         [HttpGet]
-        public IEnumerable<Manufacturer> Get()
+        public IEnumerable<Category> Get()
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.ToList();
+                return entities.Categories.ToList();
             }
         }
 
-        // GET /Manufacturer/{id}
+        // GET /Category/{id}
         [HttpGet("{id}")]
-        public Manufacturer? Get(int id)
+        public Category? Get(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
+                return entities.Categories.FirstOrDefault(e => e.CategoryId == id);
             }
         }
 
-        // POST /Manufacturer
+        // POST /Category
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Manufacturer Manufacturer)
+        public HttpResponseMessage Post([FromBody] Category Category)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                entities.Manufacturers.Add(Manufacturer);
+                entities.Categories.Add(Category);
                 entities.SaveChanges();
+
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
         }
 
-        // PUT /Manufacturer/{id}
+        // PUT /Category/{id}
         [HttpPut("{id}")]
-        public HttpResponseMessage Put(int id, [FromBody] Manufacturer updatedManufacturer)
+        public HttpResponseMessage Put(int id, [FromBody] Category updatedCategory)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
-                if (Manufacturer == null)
+                var Category = entities.Categories.FirstOrDefault(e => e.CategoryId == id);
+                var message = new HttpResponseMessage();
+                if (Category == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                Manufacturer.Name = updatedManufacturer.Name;
+                Category.Name = updatedCategory.Name;
+                Category.MinCategoryWeightGrams = updatedCategory.MinCategoryWeightGrams;
+                Category.Icon = updatedCategory.Icon;
                 entities.SaveChanges();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
 
-        // DELETE /Manufacturer/{id}
+        // DELETE /Category/{id}
         [HttpDelete("{id}")]
         public HttpResponseMessage Delete(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
-                if (Manufacturer == null)
+                var Category = entities.Categories.FirstOrDefault(e => e.CategoryId == id);
+                var message = new HttpResponseMessage();
+                if (Category == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                entities.Manufacturers.Remove(Manufacturer);
+                entities.Categories.Remove(Category);
                 entities.SaveChanges();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }

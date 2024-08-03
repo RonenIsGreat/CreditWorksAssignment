@@ -8,69 +8,75 @@ namespace backend.Controllers
     [Route("[controller]")]
     [ApiController]
     [EnableCors]
-    public class ManufacturerController : ControllerBase
+    public class VehicleController : ControllerBase
     {
-        // GET /Manufacturer
+        // GET /Vehicle
         [HttpGet]
-        public IEnumerable<Manufacturer> Get()
+        public IEnumerable<Vehicle> Get()
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.ToList();
+                return entities.Vehicles.ToList();
             }
         }
 
-        // GET /Manufacturer/{id}
+        // GET /Vehicle/{id}
         [HttpGet("{id}")]
-        public Manufacturer? Get(int id)
+        public Vehicle? Get(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
+                return entities.Vehicles.FirstOrDefault(e => e.VehicleId == id);
             }
         }
 
-        // POST /Manufacturer
+        // POST Vehicle
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Manufacturer Manufacturer)
+        public HttpResponseMessage Post([FromBody] Vehicle vehicle)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                entities.Manufacturers.Add(Manufacturer);
+                entities.Vehicles.Add(vehicle);
                 entities.SaveChanges();
+
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
         }
 
-        // PUT /Manufacturer/{id}
+        // PUT /Vehicle/{id}
         [HttpPut("{id}")]
-        public HttpResponseMessage Put(int id, [FromBody] Manufacturer updatedManufacturer)
+        public HttpResponseMessage Put(int id, [FromBody] Vehicle updatedVehicle)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
-                if (Manufacturer == null)
+                var vehicle = entities.Vehicles.FirstOrDefault(e => e.VehicleId == id);
+                var message = new HttpResponseMessage();
+                if (vehicle == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                Manufacturer.Name = updatedManufacturer.Name;
+                vehicle.OwnerName = updatedVehicle.OwnerName;
+                vehicle.ManufacturerId = updatedVehicle.ManufacturerId;
+                vehicle.Year = updatedVehicle.Year;
+                vehicle.WeightInGrams = updatedVehicle.WeightInGrams;
                 entities.SaveChanges();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
 
-        // DELETE /Manufacturer/{id}
+        // DELETE /Vehicle/{id}
         [HttpDelete("{id}")]
         public HttpResponseMessage Delete(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
-                if (Manufacturer == null)
+                var vehicle = entities.Vehicles.FirstOrDefault(e => e.VehicleId == id);
+                var message = new HttpResponseMessage();
+                if (vehicle == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                entities.Manufacturers.Remove(Manufacturer);
+                entities.Vehicles.Remove(vehicle);
                 entities.SaveChanges();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }

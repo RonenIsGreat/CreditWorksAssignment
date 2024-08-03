@@ -12,6 +12,10 @@ public partial class CreditWorksContext : DbContext
 
     public virtual DbSet<Manufacturer> Manufacturers { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
+    public virtual DbSet<Vehicle> Vehicles { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // This is the connection string to access the MSSQL server. Change the user id and password to your own
@@ -23,9 +27,24 @@ public partial class CreditWorksContext : DbContext
     {
         modelBuilder.Entity<Manufacturer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Manufact");
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.HasKey(e => e.ManufacturerId);
+            entity.Property(e => e.ManufacturerId).HasColumnName("ID");
             entity.Property(e => e.Name).HasMaxLength(128);
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.CategoryId);
+            entity.Property(e => e.CategoryId).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(128);
+            entity.Property(e => e.Icon).HasMaxLength(128);
+        });
+
+        modelBuilder.Entity<Vehicle>(entity =>
+        {
+            entity.HasKey(e => e.VehicleId);
+            entity.Property(e => e.VehicleId).HasColumnName("ID");
+            entity.Property(e => e.OwnerName).HasMaxLength(128);
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -6,7 +6,7 @@ Go
 
 Create table Manufacturers (
 	ID int primary key identity,
-	Name nvarchar(100)
+	Name nvarchar(128)
 )
 Go
 
@@ -15,4 +15,27 @@ Insert into Manufacturers values ('Mercedes')
 Insert into Manufacturers values ('Honda')
 Insert into Manufacturers values ('Ferrari')
 Insert into Manufacturers values ('Toyota')
+Go
+
+Create table Categories (
+	ID int primary key identity,
+	Name nvarchar(128),
+	MinCategoryWeightGrams int,
+	Icon nvarchar(128)
+)
+Go
+
+Insert into Categories values ('Light', 0, 'done')
+Insert into Categories values ('Medium', 500000, 'done_all')
+Insert into Categories values ('Heavy', 2500000, 'done_outline')
+Go
+
+
+Create table Vehicles (
+	ID int primary key identity,
+	OwnerName nvarchar(128),
+	ManufacturerId int FOREIGN KEY REFERENCES Manufacturers(ID),
+	Year int,
+	WeightInGrams int
+)
 Go
