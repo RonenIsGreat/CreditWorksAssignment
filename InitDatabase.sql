@@ -25,11 +25,10 @@ Create table Categories (
 )
 Go
 
-Insert into Categories values ('Light', 0, 'done')
-Insert into Categories values ('Medium', 500000, 'done_all')
-Insert into Categories values ('Heavy', 2500000, 'done_outline')
+Insert into Categories values ('Light', 0, 'Light')
+Insert into Categories values ('Medium', 500000, 'Medium')
+Insert into Categories values ('Heavy', 2500000, 'Heavy')
 Go
-
 
 Create table Vehicles (
 	ID int primary key identity,

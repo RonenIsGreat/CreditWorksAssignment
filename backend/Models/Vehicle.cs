@@ -16,7 +16,6 @@ public class Vehicle
     [ForeignKey("ManufacturerId")]
     public required int ManufacturerId { get; set; }
     public virtual Manufacturer? Manufacturer { get; set; }
-    
 
     public required int Year { get; set; }
 

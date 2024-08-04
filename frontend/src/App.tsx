@@ -1,27 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
-import useAsyncMemo from './hooks/useAsyncMemo';
+import VehiclesPage from './components/vehiclesComponents/vehiclesPage/vehiclesPage';
+import CategoriesPage from './components/categoriesComponents/categoriesPage/categoriesPage';
+import ManufacturersPage from './components/manufacturersComponents/manufacturersPage/manufacturersPage';
 
-const fetchHelloWorld = async (): Promise<string> => {
-  const response = await fetch('http://localhost:5454/HelloWorld');
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return await response.text();
-};
+type tabType = 'Vehicles' | 'Manufacturers' | 'Categories';
 
 function App() {
-  const value = useAsyncMemo(fetchHelloWorld, []);
+  const [tab, setTab] = useState<tabType>('Vehicles')
+  const tabs: tabType[] = ['Vehicles', 'Manufacturers', 'Categories']
+
+  function renderTab(tab: tabType){
+    return <button key={`tab-${tab}`} type="button" onClick={()=>setTab(tab)}>
+        {tab}
+      </button>
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          {value}
-        </div>
-      </header>
+    <div className='app'>
+      <div className='Tabs'>
+          {tabs.map(renderTab)}
+      </div>
+
+      {tab === 'Vehicles' && <VehiclesPage />}
+      {tab === 'Manufacturers' && <ManufacturersPage />}
+      {tab === 'Categories' && <CategoriesPage />}
     </div>
   );
 }

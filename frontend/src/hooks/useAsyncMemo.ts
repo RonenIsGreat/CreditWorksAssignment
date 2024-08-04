@@ -1,15 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-const useAsyncMemo = <T>(asyncFn: () => Promise<T>, dependencies: any[]): T | null => {
-  const [value, setValue] = useState<T | null>(null);
+const useAsyncMemo = <T>(
+  asyncFn: () => Promise<T>,
+  dependencies: any[],
+  defaultValue: T | null = null
+): T | null => {
+  const [value, setValue] = useState<T | null>(defaultValue);
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchData = async () => {
-      const result = await asyncFn();
-      if (isMounted) {
-        setValue(result);
+      try {
+        const result = await asyncFn();
+        if (isMounted) {
+          setValue(result);
+        }
+      } finally {
+        if (isMounted) {
+        }
       }
     };
 

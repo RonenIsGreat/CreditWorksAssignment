@@ -16,7 +16,7 @@ namespace backend.Controllers
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Categories.ToList();
+                return entities.Categories.OrderBy(m => m.MinCategoryWeightGrams).ToList();
             }
         }
 

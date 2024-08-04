@@ -1,0 +1,19 @@
+.smart-table {
+    .smart-table-grid {
+        display: grid;
+
+        .smart-table-cell{
+            padding: 12px;
+            text-align: center;
+            border: 1px solid gray;
+        }
+
+        .smart-table-header{
+            font-weight: bold;
+
+            &.sortable {
+                cursor: pointer;
+            }
+        }
+    }
+}

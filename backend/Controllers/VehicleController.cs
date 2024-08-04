@@ -38,7 +38,6 @@ namespace backend.Controllers
             {
                 entities.Vehicles.Add(vehicle);
                 entities.SaveChanges();
-
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
         }
