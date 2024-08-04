@@ -1,43 +1,95 @@
+import { useMemo } from "react";
+import { Category } from "../../../models/category";
+import { Manufacturer } from "../../../models/manufacturer";
 import { Vehicle } from "../../../models/vehicle";
 import SmartTable, { TableColumnProps } from "../../smartTable/smartTable";
+import CategoryIcon from "../../categoriesComponents/categoryIcon/categoryIcon";
 
 export interface VehiclesTableProps {
-    vehicles: Vehicle[],
+  vehicles: Vehicle[];
+  categories: Category[];
+  manufacturers: Manufacturer[];
 }
 
-function VehiclesTable({vehicles}: VehiclesTableProps) {
+interface TableVehicle extends Vehicle {
+  manufacturer?: Manufacturer;
+  category?: Category;
+}
 
-  const tableColumns: TableColumnProps<Vehicle>[] = [
+function VehiclesTable({
+  vehicles,
+  categories,
+  manufacturers,
+}: VehiclesTableProps) {
+  const tableVehicles = useMemo<TableVehicle[]>(() => {
+    let tableVehicles: TableVehicle[] = [];
+    const manufacturerById = Object.fromEntries(
+      manufacturers.map((x) => [x.manufacturerId, x])
+    );
+
+    vehicles.forEach((v) => {
+      const category = findCategoryForVehicle(v, categories);
+      const manufacturer = manufacturerById[v.manufacturerId];
+      const extra = { manufacturer: manufacturer, category: category };
+      const tableVehicle = Object.assign({}, v, extra) as any as TableVehicle;
+      tableVehicles.push(tableVehicle);
+    });
+
+    return tableVehicles;
+  }, [vehicles, categories, manufacturers]);
+
+  function findCategoryForVehicle(
+    vehicle: Vehicle,
+    categories: Category[]
+  ): Category | undefined {
+    // the categories are sorted from the server
+    let category = undefined;
+    categories.forEach((c) => {
+      if (c.minCategoryWeightGrams <= vehicle.weightInGrams) {
+        category = c;
+      }
+    });
+    return category;
+  }
+
+  const tableColumns: TableColumnProps<TableVehicle>[] = [
     {
       header: "Owner name",
-      renderItem: (vehicle: Vehicle) => vehicle.ownerName,
-      sortBy: (a, b) => a.ownerName.localeCompare(b.ownerName)
+      renderItem: (vehicle: TableVehicle) => vehicle.ownerName,
+      sortBy: (a, b) => a.ownerName.localeCompare(b.ownerName),
     },
     {
-      header: "ManufacturerId",
-      renderItem: (vehicle: Vehicle) => vehicle.manufacturerId,
+      header: "Manufacturer",
+      renderItem: (vehicle: TableVehicle) => vehicle.manufacturer?.name ?? "--",
     },
     {
       header: "Year",
-      renderItem: (vehicle: Vehicle) => vehicle.year,
+      renderItem: (vehicle: TableVehicle) => vehicle.year,
       sortBy: (a, b) => a.year - b.year,
     },
     {
       header: "Weight",
-      renderItem: (vehicle: Vehicle) => {
-        return `${vehicle.weightInGrams / 1000} Kg`
+      renderItem: (vehicle: TableVehicle) => {
+        return `${vehicle.weightInGrams / 1000} Kg`;
       },
       sortBy: (a, b) => a.weightInGrams - b.weightInGrams,
     },
     {
-      header: "Category",
-      renderItem: (vehicle: Vehicle) => vehicle.vehicleId,
+      header: "Category Name",
+      renderItem: (vehicle: TableVehicle) => {
+        return vehicle.category?.name ?? "--";
+      },
+    },
+    {
+      header: "Category Icon",
+      renderItem: (vehicle: TableVehicle) => {
+        const icon = vehicle.category?.icon;
+        return <CategoryIcon name={icon} />;
+      },
     },
   ];
 
-  return (
-      <SmartTable items={vehicles} tableColumns={tableColumns} />
-  );
+  return <SmartTable items={tableVehicles} tableColumns={tableColumns} />;
 }
 
 export default VehiclesTable;

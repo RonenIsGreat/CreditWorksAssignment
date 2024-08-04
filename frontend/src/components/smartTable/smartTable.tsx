@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import "./smartTable.css";
 
 export interface TableColumnProps<T> {
@@ -13,13 +13,12 @@ export interface smartTableProps<T> {
 }
 
 function SmartTable<T>({ tableColumns, items }: smartTableProps<T>) {
-//   const [sortFunction, setSortFunction] = useState<(item: T, other: T) => number>();
   const [sortedItems, setSortedItems] = useState<T[]>(items);
   const [sortedByColIndex, setSortedByColIndex] = useState<number>();
 
   // nothing to display in a table
   if (items.length === 0 || tableColumns.length === 0) {
-    return null;
+    return <div>{"Nothing to display"}</div>;
   }
 
   function headerSortPressed(tableColumn: TableColumnProps<T>, colIndex: number) {

@@ -7,7 +7,7 @@ function ManufacturersPage() {
 
   function renderTable(){
     if (items === null){
-      return "Loading..."
+      return <div>{"Loading..."}</div>;
     }
 
     return <ManufacturersTable manufacturers={items} />

@@ -3,23 +3,22 @@ import CategoryService from "../../../services/categotyService";
 import CategoriesTable from "../categorieTable/categorieTable";
 
 function CategoriesPage() {
-    const categories = useAsyncMemo(CategoryService.get, [], null);
+  const categories = useAsyncMemo(CategoryService.get, [], null);
 
-    function renderCategoriesTable(){
-      if (categories === null){
-        return "Loading..."
-      }
-
-      return <CategoriesTable categories={categories} />
+  function renderCategoriesTable() {
+    if (categories === null) {
+      return <div>{"Loading..."}</div>;
     }
 
-    return (
-      <div className="categories-page">
-        {"Categories Page"}
-        {renderCategoriesTable()}
-      </div>
-    );
+    return <CategoriesTable categories={categories} />;
   }
-  
-  export default CategoriesPage;
-  
+
+  return (
+    <div className="categories-page">
+      {"Categories Page"}
+      {renderCategoriesTable()}
+    </div>
+  );
+}
+
+export default CategoriesPage;
