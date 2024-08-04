@@ -61,6 +61,11 @@ function VehiclesTable({
     {
       header: "Manufacturer",
       renderItem: (vehicle: TableVehicle) => vehicle.manufacturer?.name ?? "--",
+      sortBy: (a, b) => {
+        const aa = a.manufacturer?.name ?? "--";
+        const bb = b.manufacturer?.name ?? "--";
+        return aa.localeCompare(bb)
+      },
     },
     {
       header: "Year",
