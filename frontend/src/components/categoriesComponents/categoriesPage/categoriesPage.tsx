@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import useAsyncMemo from "../../../hooks/useAsyncMemo";
 import CategoryService from "../../../services/categotyService";
 import CategoriesTable from "../categorieTable/categorieTable";
@@ -14,7 +14,9 @@ function CategoriesPage() {
     [refreshCount],
     null
   );
-  const [selectedCategory, setSelectedCategory] = useState<Category | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState<
+    Category | undefined
+  >();
 
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
@@ -30,7 +32,11 @@ function CategoriesPage() {
 
   function renderCategoriesTable() {
     if (categories === null || isLoading) {
-      return <div>{"Loading..."}</div>;
+      return (
+        <div>
+          <Spinner animation="border" />
+        </div>
+      );
     }
 
     return (

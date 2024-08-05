@@ -23,7 +23,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
 
   function roundAndSetWeight(weight: string) {
     let val = Number(weight);
-    val = Math.round(val * 100) / 100;
+    val = Math.floor(val * 100) / 100;
     setMinWeight(val.toString());
   }
 
@@ -45,7 +45,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
     handleClose();
   }
 
-  async function handleDelete(){
+  async function handleDelete() {
     await CategoryService.delete(id);
     handleClose();
   }
@@ -77,7 +77,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
             value={minWeight}
             onChange={(e) => roundAndSetWeight(e.target.value)}
           />
-          <Form.Label size="sm">
+          <Form.Label>
             The max weight for the category will be up to the next category
           </Form.Label>
 
@@ -122,10 +122,10 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
           </Button>
         )}
         <Button variant="secondary" onClick={handleClose}>
-        Close
+          Close
         </Button>
         <Button variant="primary" onClick={() => finishPressed()}>
-        {finishButtonText}
+          {finishButtonText}
         </Button>
       </Modal.Footer>
     </Modal>

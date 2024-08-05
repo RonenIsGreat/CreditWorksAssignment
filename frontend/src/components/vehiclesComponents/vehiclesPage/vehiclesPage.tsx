@@ -1,3 +1,4 @@
+import { Button, Spinner } from "react-bootstrap";
 import useAsyncMemo from "../../../hooks/useAsyncMemo";
 import { Category } from "../../../models/category";
 import { Manufacturer } from "../../../models/manufacturer";
@@ -6,27 +7,56 @@ import CategoryService from "../../../services/categotyService";
 import ManufacturerService from "../../../services/manufacturerService";
 import VehicleService from "../../../services/vehicleService";
 import VehiclesTable from "../vehiclesTable/vehiclesTable";
+import { useState } from "react";
+import "./vehiclesPage.css";
+import VehicleModal from "../vehicleModal/vehicleModal";
 
 function VehiclesPage() {
-  const [vehicles, a] = useAsyncMemo<Vehicle[]>(
+  const [refreshCount, setRefreshCount] = useState(0);
+  const [vehicles, loadingV] = useAsyncMemo<Vehicle[]>(
     () => VehicleService.get(),
-    [],
+    [refreshCount],
     null
   );
-  const [categories,b] = useAsyncMemo<Category[]>(
+  const [categories, loadingC] = useAsyncMemo<Category[]>(
     () => CategoryService.get(),
-    [],
+    [refreshCount],
     null
   );
-  const [manufacturers, c] = useAsyncMemo<Manufacturer[]>(
+  const [manufacturers, loadingM] = useAsyncMemo<Manufacturer[]>(
     () => ManufacturerService.get(),
-    [],
+    [refreshCount],
     null
   );
 
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | undefined>();
+
+  const [showModal, setShowModal] = useState(false);
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => {
+    setShowModal(false);
+    refreshData();
+  };
+
+  function refreshData() {
+    setRefreshCount(refreshCount + 1);
+    setSelectedVehicle(undefined);
+  }
+
   function renderVehiclesTable() {
-    if (vehicles === null || categories === null || manufacturers === null) {
-      return <div>{"Loading..."}</div>;
+    if (
+      vehicles === null ||
+      categories === null ||
+      manufacturers === null ||
+      loadingV ||
+      loadingC ||
+      loadingM
+    ) {
+      return (
+        <div>
+          <Spinner animation="border" />
+        </div>
+      );
     }
 
     return (
@@ -34,6 +64,10 @@ function VehiclesPage() {
         vehicles={vehicles}
         categories={categories}
         manufacturers={manufacturers}
+        onRowPress={(vehicle) => {
+          setSelectedVehicle(vehicle);
+          handleShow();
+        }}
       />
     );
   }
@@ -42,6 +76,18 @@ function VehiclesPage() {
     <div className="vehicles-page">
       {renderVehiclesTable()}
 
+      <Button className="add-button" variant="primary" onClick={handleShow}>
+        {"Add Vehicle"}
+      </Button>
+
+      {showModal && (
+        <VehicleModal
+          show={showModal}
+          handleClose={handleClose}
+          vehicle={selectedVehicle}
+          manufacturers={manufacturers!}
+        />
+      )}
     </div>
   );
 }

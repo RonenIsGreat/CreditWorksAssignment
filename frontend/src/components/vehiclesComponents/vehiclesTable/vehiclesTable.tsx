@@ -9,6 +9,7 @@ export interface VehiclesTableProps {
   vehicles: Vehicle[];
   categories: Category[];
   manufacturers: Manufacturer[];
+  onRowPress: (vehicle: Vehicle) => void;
 }
 
 interface TableVehicle extends Vehicle {
@@ -20,6 +21,7 @@ function VehiclesTable({
   vehicles,
   categories,
   manufacturers,
+  onRowPress
 }: VehiclesTableProps) {
   const tableVehicles = useMemo<TableVehicle[]>(() => {
     let tableVehicles: TableVehicle[] = [];
@@ -94,7 +96,7 @@ function VehiclesTable({
     },
   ];
 
-  return <SmartTable items={tableVehicles} tableColumns={tableColumns} />;
+  return <SmartTable items={tableVehicles} tableColumns={tableColumns} onRowPress={onRowPress} />;
 }
 
 export default VehiclesTable;

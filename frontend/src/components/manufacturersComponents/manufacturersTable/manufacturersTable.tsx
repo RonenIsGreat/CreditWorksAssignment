@@ -3,9 +3,10 @@ import SmartTable, { TableColumnProps } from "../../smartTable/smartTable";
 
 export interface ManufacturersTableProps {
   manufacturers: Manufacturer[];
+  onRowPress: (item: Manufacturer) => void;
 }
 
-function ManufacturersTable({ manufacturers }: ManufacturersTableProps) {
+function ManufacturersTable({ manufacturers, onRowPress }: ManufacturersTableProps) {
   const tableColumns: TableColumnProps<Manufacturer>[] = [
     {
       header: "Name",
@@ -14,7 +15,7 @@ function ManufacturersTable({ manufacturers }: ManufacturersTableProps) {
     },
   ];
 
-  return <SmartTable items={manufacturers} tableColumns={tableColumns} />;
+  return <SmartTable items={manufacturers} tableColumns={tableColumns} onRowPress={onRowPress} />;
 }
 
 export default ManufacturersTable;
