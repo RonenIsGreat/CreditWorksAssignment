@@ -10,11 +10,11 @@ class manufacturerService {
     return HttpService.getOne("Manufacturer", id) as Promise<Manufacturer>;
   }
 
-  async post(manufacturer: Manufacturer): Promise<void> {
+  async post(manufacturer: Manufacturer): Promise<any> {
     return HttpService.post("Manufacturer", manufacturer);
   }
 
-  async put(manufacturer: Manufacturer): Promise<void> {
+  async put(manufacturer: Manufacturer): Promise<any> {
     return HttpService.put(
       "Manufacturer",
       manufacturer.manufacturerId,
@@ -22,7 +22,7 @@ class manufacturerService {
     );
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<any> {
     return HttpService.delete("Manufacturer", id);
   }
 }

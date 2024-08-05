@@ -32,7 +32,7 @@ function VehicleModal({
 
   function roundAndSetYear(year: string) {
     let val = Number(year);
-    if(val>9999){
+    if (val > 9999) {
       val = 9999;
     }
     val = Math.round(val);
@@ -41,7 +41,7 @@ function VehicleModal({
 
   function roundAndSetWeight(weight: string) {
     let val = Number(weight);
-    if(val>999999999){
+    if (val > 999999999) {
       val = 999999999;
     }
     val = Math.floor(val * 100) / 100;

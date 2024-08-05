@@ -32,6 +32,7 @@ class httpService<T> {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+    return await response.json();
   }
 
   async put(entity: entityType, id: number, body: any) {
@@ -47,6 +48,7 @@ class httpService<T> {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+    return await response.json();
   }
 
   async delete(entity: entityType, id: number) {
@@ -57,6 +59,7 @@ class httpService<T> {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+    return await response.json();
   }
 }
 

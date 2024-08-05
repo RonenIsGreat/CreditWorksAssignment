@@ -72,13 +72,21 @@ function VehiclesPage() {
     );
   }
 
+  const hasNoManufacturers = (manufacturers?.length === 0)
+
   return (
     <div className="vehicles-page">
       {renderVehiclesTable()}
 
-      <Button className="add-button" variant="primary" onClick={handleShow}>
+      <Button
+        className="add-button"
+        variant="primary"
+        onClick={handleShow}
+        disabled={hasNoManufacturers}
+      >
         {"Add Vehicle"}
       </Button>
+      {hasNoManufacturers && <div>{"Can't add vehicle without having manufacturers"}</div>}
 
       {showModal && (
         <VehicleModal

@@ -38,7 +38,7 @@ namespace backend.Controllers
             {
                 var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
                 if(existingCategoryWithSameWeight != null){
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                    return new HttpResponseMessage(HttpStatusCode.Conflict);
                 }
                 entities.Categories.Add(Category);
                 entities.SaveChanges();
@@ -59,9 +59,10 @@ namespace backend.Controllers
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
+                var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.CategoryId != updatedCategory.CategoryId &&
+                                                                                         e.MinCategoryWeightGrams == updatedCategory.MinCategoryWeightGrams);
                 if(existingCategoryWithSameWeight != null){
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                    return new HttpResponseMessage(HttpStatusCode.Conflict);
                 }
                 Category.Name = updatedCategory.Name;
                 Category.MinCategoryWeightGrams = updatedCategory.MinCategoryWeightGrams;

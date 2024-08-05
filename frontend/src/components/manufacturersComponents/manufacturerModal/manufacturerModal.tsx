@@ -17,6 +17,8 @@ function ManufacturerModal({
   const [id, _] = useState(manufacturer?.manufacturerId ?? 0);
   const [name, setName] = useState(manufacturer?.name ?? "");
 
+  const [displayErrorManufacturerInUse, setDisplayErrorManufacturerInUse] =
+    useState(false);
   const isExisting = !!manufacturer;
 
   async function finishPressed() {
@@ -33,8 +35,12 @@ function ManufacturerModal({
   }
 
   async function handleDelete() {
-    await ManufacturerService.delete(id);
-    handleClose();
+    const res = await ManufacturerService.delete(id);
+    if (res.statusCode === 409) {
+      setDisplayErrorManufacturerInUse(true);
+    } else {
+      handleClose();
+    }
   }
 
   const title = isExisting ? "Edit Manufacturer" : "Add Manufacturer";
@@ -70,6 +76,13 @@ function ManufacturerModal({
         <Button variant="primary" onClick={() => finishPressed()}>
           {finishButtonText}
         </Button>
+        {displayErrorManufacturerInUse && (
+          <>
+            <div>
+              {"Error! Manufacturer is assigned to a vehicle. Unassign first."}
+            </div>
+          </>
+        )}
       </Modal.Footer>
     </Modal>
   );

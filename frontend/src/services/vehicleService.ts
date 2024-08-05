@@ -10,15 +10,15 @@ class vehicleService {
     return HttpService.getOne("Vehicle", id) as Promise<Vehicle>;
   }
 
-  async post(vehicle: Vehicle): Promise<void> {
+  async post(vehicle: Vehicle): Promise<any> {
     return HttpService.post("Vehicle", vehicle);
   }
 
-  async put(vehicle: Vehicle): Promise<void> {
+  async put(vehicle: Vehicle): Promise<any> {
     return HttpService.put("Vehicle", vehicle.vehicleId, vehicle);
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<any> {
     return HttpService.delete("Vehicle", id);
   }
 }

@@ -20,10 +20,12 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
     return (category.minCategoryWeightGrams / 1000).toString();
   });
   const [iconName, setIconName] = useState(category?.icon ?? "clipIcon");
+  const [displayErrorWeightExists, setDisplayErrorWeightExists] =
+    useState(false);
 
   function roundAndSetWeight(weight: string) {
     let val = Number(weight);
-    if(val>999999999){
+    if (val > 999999999) {
       val = 999999999;
     }
     val = Math.floor(val * 100) / 100;
@@ -40,12 +42,17 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
       minCategoryWeightGrams: minCategoryWeightGrams,
       icon: iconName,
     };
+    let res;
     if (isExistingCategory) {
-      await CategoryService.put(category);
+      res = await CategoryService.put(category);
     } else {
-      await CategoryService.post(category);
+      res = await CategoryService.post(category);
     }
-    handleClose();
+    if (res.statusCode === 409) {
+      setDisplayErrorWeightExists(true);
+    } else {
+      handleClose();
+    }
   }
 
   async function handleDelete() {
@@ -131,6 +138,9 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
         <Button variant="primary" onClick={() => finishPressed()}>
           {finishButtonText}
         </Button>
+        {displayErrorWeightExists && (
+          <div>{"Error! Category with same weight already exists."}</div>
+        )}
       </Modal.Footer>
     </Modal>
   );

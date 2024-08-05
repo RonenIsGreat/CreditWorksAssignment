@@ -10,15 +10,15 @@ class categoryService {
     return HttpService.getOne("Category", id) as Promise<Category>;
   }
 
-  async post(category: Category): Promise<void> {
+  async post(category: Category): Promise<any> {
     return HttpService.post("Category", category);
   }
 
-  async put(category: Category): Promise<void> {
+  async put(category: Category): Promise<any> {
     return HttpService.put("Category", category.categoryId, category);
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: number): Promise<any> {
     return HttpService.delete("Category", id);
   }
 }
