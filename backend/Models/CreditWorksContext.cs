@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Models;
 
 public partial class CreditWorksContext : DbContext
 {
-    public CreditWorksContext() { }
-
     public CreditWorksContext(DbContextOptions<CreditWorksContext> options) : base(options) { }
+
+    public CreditWorksContext(): base() { }
 
     public virtual DbSet<Manufacturer> Manufacturers { get; set; }
 
@@ -19,8 +17,8 @@ public partial class CreditWorksContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // This is the connection string to access the MSSQL server. Change the user id and password to your own
-        // TODO: use connection string from configuration
-        optionsBuilder.UseSqlServer("Server=localhost; Database=CreditWorks_RonenRossin; User Id=sa; Password=YourStrong!Passw0rd; Trusted_Connection=true; MultipleActiveResultSets=true; TrustServerCertificate=true; integrated security=false;");
+        string connectionString = "Server=localhost; Database=CreditWorks_RonenRossin; User Id=sa; Password=YourStrong!Passw0rd; Trusted_Connection=true; MultipleActiveResultSets=true; TrustServerCertificate=true; integrated security=false;";
+        optionsBuilder.UseSqlServer(connectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
