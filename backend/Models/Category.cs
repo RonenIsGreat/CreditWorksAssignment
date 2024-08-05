@@ -14,7 +14,7 @@ public class Category
 
     // We use grams so we won't need floating point.
     // The wights for the category are from this value up to the next closest category min weight.
-    public required int MinCategoryWeightGrams { get; set; }
+    public required long MinCategoryWeightGrams { get; set; }
 
     [StringLength(128)]
     public required string Icon { get; set; }

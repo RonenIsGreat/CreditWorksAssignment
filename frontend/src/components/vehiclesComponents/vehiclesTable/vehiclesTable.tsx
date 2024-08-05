@@ -21,7 +21,7 @@ function VehiclesTable({
   vehicles,
   categories,
   manufacturers,
-  onRowPress
+  onRowPress,
 }: VehiclesTableProps) {
   const tableVehicles = useMemo<TableVehicle[]>(() => {
     let tableVehicles: TableVehicle[] = [];
@@ -96,7 +96,13 @@ function VehiclesTable({
     },
   ];
 
-  return <SmartTable items={tableVehicles} tableColumns={tableColumns} onRowPress={onRowPress} />;
+  return (
+    <SmartTable
+      items={tableVehicles}
+      tableColumns={tableColumns}
+      onRowPress={onRowPress}
+    />
+  );
 }
 
 export default VehiclesTable;

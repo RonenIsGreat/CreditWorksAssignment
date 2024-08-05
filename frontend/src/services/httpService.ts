@@ -22,7 +22,10 @@ class httpService<T> {
   async post(entity: entityType, body: any) {
     const response = await fetch(url + entity, {
       method: "post",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify(body),
     });
 
@@ -34,7 +37,10 @@ class httpService<T> {
   async put(entity: entityType, id: number, body: any) {
     const response = await fetch(`${url}${entity}/${id}`, {
       method: "put",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify(body),
     });
 

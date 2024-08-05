@@ -9,7 +9,11 @@ interface ManufacturerModalProps {
   manufacturer?: Manufacturer;
 }
 
-function ManufacturerModal({ show, handleClose, manufacturer }: ManufacturerModalProps) {
+function ManufacturerModal({
+  show,
+  handleClose,
+  manufacturer,
+}: ManufacturerModalProps) {
   const [id, _] = useState(manufacturer?.manufacturerId ?? 0);
   const [name, setName] = useState(manufacturer?.name ?? "");
 
@@ -28,7 +32,7 @@ function ManufacturerModal({ show, handleClose, manufacturer }: ManufacturerModa
     handleClose();
   }
 
-  async function handleDelete(){
+  async function handleDelete() {
     await ManufacturerService.delete(id);
     handleClose();
   }
@@ -49,6 +53,7 @@ function ManufacturerModal({ show, handleClose, manufacturer }: ManufacturerModa
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            maxLength={128}
           />
         </Form>
       </Modal.Body>
@@ -60,10 +65,10 @@ function ManufacturerModal({ show, handleClose, manufacturer }: ManufacturerModa
           </Button>
         )}
         <Button variant="secondary" onClick={handleClose}>
-        Close
+          Close
         </Button>
         <Button variant="primary" onClick={() => finishPressed()}>
-        {finishButtonText}
+          {finishButtonText}
         </Button>
       </Modal.Footer>
     </Modal>

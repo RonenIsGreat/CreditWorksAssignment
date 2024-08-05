@@ -32,12 +32,18 @@ function VehicleModal({
 
   function roundAndSetYear(year: string) {
     let val = Number(year);
+    if(val>9999){
+      val = 9999;
+    }
     val = Math.round(val);
     setYear(val.toString());
   }
 
   function roundAndSetWeight(weight: string) {
     let val = Number(weight);
+    if(val>999999999){
+      val = 999999999;
+    }
     val = Math.floor(val * 100) / 100;
     setWeight(val.toString());
   }
@@ -86,6 +92,7 @@ function VehicleModal({
             type="text"
             value={ownerName}
             onChange={(e) => setOwnerName(e.target.value)}
+            maxLength={128}
           />
 
           <br />

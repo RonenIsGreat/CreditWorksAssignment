@@ -36,6 +36,10 @@ namespace backend.Controllers
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
+                // var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
+                // if(existingCategoryWithSameWeight != null){
+                //     return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                // }
                 entities.Categories.Add(Category);
                 entities.SaveChanges();
 
@@ -55,6 +59,10 @@ namespace backend.Controllers
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
+                // var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
+                // if(existingCategoryWithSameWeight != null){
+                //     return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                // }
                 Category.Name = updatedCategory.Name;
                 Category.MinCategoryWeightGrams = updatedCategory.MinCategoryWeightGrams;
                 Category.Icon = updatedCategory.Icon;

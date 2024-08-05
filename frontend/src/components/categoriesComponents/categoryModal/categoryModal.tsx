@@ -23,6 +23,9 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
 
   function roundAndSetWeight(weight: string) {
     let val = Number(weight);
+    if(val>999999999){
+      val = 999999999;
+    }
     val = Math.floor(val * 100) / 100;
     setMinWeight(val.toString());
   }
@@ -66,6 +69,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            maxLength={128}
           />
 
           <br />

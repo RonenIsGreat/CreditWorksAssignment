@@ -18,5 +18,5 @@ public class Vehicle
     public required int Year { get; set; }
 
     // We use grams so we won't need floating point
-    public required int WeightInGrams { get; set; }
+    public required long WeightInGrams { get; set; }
 }

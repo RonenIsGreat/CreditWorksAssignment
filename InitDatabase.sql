@@ -20,7 +20,7 @@ Go
 Create table Categories (
 	ID int primary key identity,
 	Name nvarchar(128),
-	MinCategoryWeightGrams int,
+	MinCategoryWeightGrams bigint,
 	Icon nvarchar(128)
 )
 Go
@@ -35,6 +35,6 @@ Create table Vehicles (
 	OwnerName nvarchar(128),
 	ManufacturerId int FOREIGN KEY REFERENCES Manufacturers(ID),
 	Year int,
-	WeightInGrams int
+	WeightInGrams bigint
 )
 Go
