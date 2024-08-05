@@ -11,7 +11,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("myAppCors", policy =>
     {
-        if(allowedOrigin != null){
+        if (allowedOrigin != null)
+        {
             policy.WithOrigins(allowedOrigin)
                 .AllowAnyHeader()
                 .AllowAnyMethod();

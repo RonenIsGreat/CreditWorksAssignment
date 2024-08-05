@@ -6,9 +6,9 @@ namespace backend.Models;
 
 public partial class CreditWorksContext : DbContext
 {
-    public CreditWorksContext() {}
+    public CreditWorksContext() { }
 
-    public CreditWorksContext(DbContextOptions<CreditWorksContext> options) : base(options) {}
+    public CreditWorksContext(DbContextOptions<CreditWorksContext> options) : base(options) { }
 
     public virtual DbSet<Manufacturer> Manufacturers { get; set; }
 

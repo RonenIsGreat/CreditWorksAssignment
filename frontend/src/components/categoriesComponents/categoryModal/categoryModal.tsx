@@ -33,6 +33,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
   }
 
   const isExistingCategory = !!category;
+  const theFirstCategoryFromZeroWeight = isExistingCategory && category.minCategoryWeightGrams === 0;
 
   async function finishPressed() {
     const minCategoryWeightGrams = Number(minWeight) * 1000;
@@ -87,6 +88,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
             min="0"
             value={minWeight}
             onChange={(e) => roundAndSetWeight(e.target.value)}
+            disabled={theFirstCategoryFromZeroWeight}
           />
           <Form.Label>
             The max weight for the category will be up to the next category
@@ -128,7 +130,7 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
 
       <Modal.Footer className="justify-content-between">
         {isExistingCategory && (
-          <Button variant="danger" onClick={() => handleDelete()}>
+          <Button variant="danger" onClick={() => handleDelete()} disabled={theFirstCategoryFromZeroWeight}>
             Delete
           </Button>
         )}
@@ -138,6 +140,9 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
         <Button variant="primary" onClick={() => finishPressed()}>
           {finishButtonText}
         </Button>
+        {theFirstCategoryFromZeroWeight && (
+          <div>{"Can't delete or change the weight of the first category."}</div>
+        )}
         {displayErrorWeightExists && (
           <div>{"Error! Category with same weight already exists."}</div>
         )}

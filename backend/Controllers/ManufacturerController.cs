@@ -70,8 +70,9 @@ namespace backend.Controllers
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                var VehicleWithCategory = entities.Manufacturers.FirstOrDefault(v => v.ManufacturerId == Manufacturer.ManufacturerId);
-                if(VehicleWithCategory != null){
+                var VehicleWithCategory = entities.Vehicles.FirstOrDefault(v => v.ManufacturerId == Manufacturer.ManufacturerId);
+                if (VehicleWithCategory != null)
+                {
                     return new HttpResponseMessage(HttpStatusCode.Conflict);
                 }
                 entities.Manufacturers.Remove(Manufacturer);
