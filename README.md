@@ -1,6 +1,6 @@
 CreditWork programming assignment.
 
-I have a Mac. My working setup is Visual Studio Code as the IDE for frontend in React.js with typescript and backend in C# targeted to .Net7.0 that uses Entity Framework MVC.
+I have a Mac, so my working setup is Visual Studio Code as the IDE for frontend in React.js with typescript and backend in C# targeted to .Net7.0 that uses Entity Framework MVC.
 For the Database, I pulled a docker image of MSSQL 2022 on a Linux container.
 
 
