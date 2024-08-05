@@ -60,11 +60,6 @@ function CategoryModal({ show, handleClose, category }: CategoryModalProps) {
       </Modal.Header>
 
       <Modal.Body>
-        <div>
-          Add a new category. Please note you can't use an existing category's
-          wieght.
-        </div>
-        <br />
         <Form>
           <Form.Label>Name:</Form.Label>
           <Form.Control
