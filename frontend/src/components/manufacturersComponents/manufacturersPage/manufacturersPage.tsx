@@ -3,10 +3,10 @@ import ManufacturerService from "../../../services/manufacturerService";
 import ManufacturersTable from "../manufacturersTable/manufacturersTable";
 
 function ManufacturersPage() {
-    const items = useAsyncMemo(()=>ManufacturerService.get(), [], null);
+    const [items, isLoading] = useAsyncMemo(() => ManufacturerService.get(), [], null);
 
   function renderTable(){
-    if (items === null){
+    if (items === null || isLoading){
       return <div>{"Loading..."}</div>;
     }
 
@@ -15,7 +15,6 @@ function ManufacturersPage() {
 
     return (
       <div className="manufacturers-page">
-        {"Manufacturers Page"}
         {renderTable()}
       </div>
     );

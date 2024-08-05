@@ -2,18 +2,22 @@
     .smart-table-grid {
         display: grid;
 
-        .smart-table-cell{
+        .smart-table-cell {
             padding: 12px;
             text-align: center;
             border: 1px solid gray;
         }
 
-        .smart-table-header{
+        .smart-table-header {
             font-weight: bold;
 
             &.sortable {
                 cursor: pointer;
             }
+        }
+
+        .smart-table-item {
+            cursor: pointer;
         }
     }
 }

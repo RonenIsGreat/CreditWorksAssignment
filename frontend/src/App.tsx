@@ -1,30 +1,41 @@
-import { useState } from 'react';
-import './App.css';
-import VehiclesPage from './components/vehiclesComponents/vehiclesPage/vehiclesPage';
-import CategoriesPage from './components/categoriesComponents/categoriesPage/categoriesPage';
-import ManufacturersPage from './components/manufacturersComponents/manufacturersPage/manufacturersPage';
+import { useState } from "react";
+import "./App.css";
+import VehiclesPage from "./components/vehiclesComponents/vehiclesPage/vehiclesPage";
+import CategoriesPage from "./components/categoriesComponents/categoriesPage/categoriesPage";
+import ManufacturersPage from "./components/manufacturersComponents/manufacturersPage/manufacturersPage";
+import { Button } from "react-bootstrap";
 
-type tabType = 'Vehicles' | 'Manufacturers' | 'Categories';
+type tabType = "Vehicles" | "Manufacturers" | "Categories";
 
 function App() {
-  const [tab, setTab] = useState<tabType>('Vehicles')
-  const tabs: tabType[] = ['Vehicles', 'Manufacturers', 'Categories']
+  const [selectedTab, setSelectedTab] = useState<tabType>("Vehicles");
+  const tabs: tabType[] = ["Vehicles", "Manufacturers", "Categories"];
 
-  function renderTab(tab: tabType){
-    return <button key={`tab-${tab}`} type="button" onClick={()=>setTab(tab)}>
+  function renderTab(tab: tabType) {
+    let variant = "secondary";
+    if (tab === selectedTab) {
+      variant = "dark";
+    }
+
+    return (
+      <Button
+        key={`tab-${tab}`}
+        variant={variant}
+        color="red"
+        onClick={() => setSelectedTab(tab)}
+      >
         {tab}
-      </button>
+      </Button>
+    );
   }
 
   return (
-    <div className='app'>
-      <div className='Tabs'>
-          {tabs.map(renderTab)}
-      </div>
+    <div className="app">
+      <div className="tabs">{tabs.map(renderTab)}</div>
 
-      {tab === 'Vehicles' && <VehiclesPage />}
-      {tab === 'Manufacturers' && <ManufacturersPage />}
-      {tab === 'Categories' && <CategoriesPage />}
+      {selectedTab === "Vehicles" && <VehiclesPage />}
+      {selectedTab === "Manufacturers" && <ManufacturersPage />}
+      {selectedTab === "Categories" && <CategoriesPage />}
     </div>
   );
 }

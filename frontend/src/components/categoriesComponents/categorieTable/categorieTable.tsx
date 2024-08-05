@@ -4,9 +4,10 @@ import CategoryIcon from "../categoryIcon/categoryIcon";
 
 export interface CategoriesTableProps {
   categories: Category[];
+  onRowPress: (item: Category) => void;
 }
 
-function CategoriesTable({ categories }: CategoriesTableProps) {
+function CategoriesTable({ categories, onRowPress }: CategoriesTableProps) {
   const tableColumns: TableColumnProps<Category>[] = [
     {
       header: "Name",
@@ -26,7 +27,7 @@ function CategoriesTable({ categories }: CategoriesTableProps) {
     },
   ];
 
-  return <SmartTable items={categories} tableColumns={tableColumns} />;
+  return <SmartTable items={categories} tableColumns={tableColumns} onRowPress={onRowPress} />;
 }
 
 export default CategoriesTable;

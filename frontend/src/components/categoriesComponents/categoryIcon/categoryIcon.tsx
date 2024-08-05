@@ -4,8 +4,10 @@ import compassIcon from "../../../assets/icons/categoryIcons/compass-icon.png";
 import hammerIcon from "../../../assets/icons/categoryIcons/hammer-icon.png";
 import magnetIcon from "../../../assets/icons/categoryIcons/magnet-icon.png";
 
+type CategoryIconName = "brushIcon" | "clipIcon" | "compassIcon" | "hammerIcon" | "magnetIcon";
+
 interface CategoryIconProps {
-  name?: string;
+  name: string;
   size?: number;
 }
 
@@ -13,15 +15,15 @@ function CategoryIcon({ name, size }: CategoryIconProps) {
   const imgSize = size ?? 20;
 
   switch (name) {
-    case "1":
+    case "brushIcon":
       return (
         <img src={brushIcon} alt="brushIcon" width={imgSize} height={imgSize} />
       );
-    case "2":
+    case "clipIcon":
       return (
         <img src={clipIcon} alt="clipIcon" width={imgSize} height={imgSize} />
       );
-    case "3":
+    case "compassIcon":
       return (
         <img
           src={compassIcon}
@@ -30,7 +32,7 @@ function CategoryIcon({ name, size }: CategoryIconProps) {
           height={imgSize}
         />
       );
-    case "4":
+    case "hammerIcon":
       return (
         <img
           src={hammerIcon}
@@ -39,7 +41,7 @@ function CategoryIcon({ name, size }: CategoryIconProps) {
           height={imgSize}
         />
       );
-    case "5":
+    case "magnetIcon":
       return (
         <img
           src={magnetIcon}

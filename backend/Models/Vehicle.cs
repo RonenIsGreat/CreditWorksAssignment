@@ -12,10 +12,8 @@ public class Vehicle
 
     [StringLength(128)]
     public required string OwnerName { get; set; }
-
-    [ForeignKey("ManufacturerId")]
+    
     public required int ManufacturerId { get; set; }
-    public virtual Manufacturer? Manufacturer { get; set; }
 
     public required int Year { get; set; }
 

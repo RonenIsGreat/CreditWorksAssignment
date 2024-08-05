@@ -1,3 +1,10 @@
 .app{
     margin: 32px;
+
+    .tabs {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        margin-bottom: 24px;
+    }
 }

@@ -10,9 +10,14 @@ export interface TableColumnProps<T> {
 export interface smartTableProps<T> {
   tableColumns: TableColumnProps<T>[];
   items: T[];
+  onRowPress?: (item: T) => void;
 }
 
-function SmartTable<T>({ tableColumns, items }: smartTableProps<T>) {
+function SmartTable<T>({
+  tableColumns,
+  items,
+  onRowPress,
+}: smartTableProps<T>) {
   const [sortedItems, setSortedItems] = useState<T[]>(items);
   const [sortedByColIndex, setSortedByColIndex] = useState<number>();
 
@@ -21,20 +26,22 @@ function SmartTable<T>({ tableColumns, items }: smartTableProps<T>) {
     return <div>{"Nothing to display"}</div>;
   }
 
-  function headerSortPressed(tableColumn: TableColumnProps<T>, colIndex: number) {
+  function headerSortPressed(
+    tableColumn: TableColumnProps<T>,
+    colIndex: number
+  ) {
     if (!tableColumn.sortBy) {
-        return;
+      return;
     }
 
-    if(sortedByColIndex !== colIndex){
-        let newOrder = sortedItems.slice().sort(tableColumn.sortBy)
-        setSortedItems(newOrder)
-    }   
-    else{
-        let newOrder = sortedItems.slice().reverse()
-        setSortedItems(newOrder)
+    if (sortedByColIndex !== colIndex) {
+      let newOrder = sortedItems.slice().sort(tableColumn.sortBy);
+      setSortedItems(newOrder);
+    } else {
+      let newOrder = sortedItems.slice().reverse();
+      setSortedItems(newOrder);
     }
-    setSortedByColIndex(colIndex)
+    setSortedByColIndex(colIndex);
   }
 
   function renderHeader(tableColumn: TableColumnProps<T>, colIndex: number) {
@@ -55,7 +62,15 @@ function SmartTable<T>({ tableColumns, items }: smartTableProps<T>) {
 
   function renderItemRow(item: T, rowIndex: number) {
     return tableColumns.map((c, i) => (
-      <div key={`row-${rowIndex}-${i}`} className="smart-table-cell">
+      <div
+        key={`row-${rowIndex}-${i}`}
+        className="smart-table-item smart-table-cell"
+        onClick={() => {
+          if (onRowPress) {
+            onRowPress(item);
+          }
+        }}
+      >
         {c.renderItem(item)}
       </div>
     ));

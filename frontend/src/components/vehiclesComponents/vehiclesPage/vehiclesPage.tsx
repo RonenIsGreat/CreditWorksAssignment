@@ -8,17 +8,17 @@ import VehicleService from "../../../services/vehicleService";
 import VehiclesTable from "../vehiclesTable/vehiclesTable";
 
 function VehiclesPage() {
-  const vehicles = useAsyncMemo<Vehicle[]>(
+  const [vehicles, a] = useAsyncMemo<Vehicle[]>(
     () => VehicleService.get(),
     [],
     null
   );
-  const categories = useAsyncMemo<Category[]>(
+  const [categories,b] = useAsyncMemo<Category[]>(
     () => CategoryService.get(),
     [],
     null
   );
-  const manufacturers = useAsyncMemo<Manufacturer[]>(
+  const [manufacturers, c] = useAsyncMemo<Manufacturer[]>(
     () => ManufacturerService.get(),
     [],
     null
@@ -40,8 +40,8 @@ function VehiclesPage() {
 
   return (
     <div className="vehicles-page">
-      {"Vehicles Page"}
       {renderVehiclesTable()}
+
     </div>
   );
 }

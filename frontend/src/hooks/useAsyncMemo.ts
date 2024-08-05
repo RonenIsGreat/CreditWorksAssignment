@@ -4,11 +4,13 @@ const useAsyncMemo = <T>(
   asyncFn: () => Promise<T>,
   dependencies: any[],
   defaultValue: T | null = null
-): T | null => {
+): [T | null,boolean] => {
   const [value, setValue] = useState<T | null>(defaultValue);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
+    setIsLoading(true)
 
     const fetchData = async () => {
       try {
@@ -17,8 +19,7 @@ const useAsyncMemo = <T>(
           setValue(result);
         }
       } finally {
-        if (isMounted) {
-        }
+        setIsLoading(false)
       }
     };
 
@@ -29,7 +30,7 @@ const useAsyncMemo = <T>(
     };
   }, dependencies);
 
-  return value;
+  return [value, isLoading];
 };
 
 export default useAsyncMemo;

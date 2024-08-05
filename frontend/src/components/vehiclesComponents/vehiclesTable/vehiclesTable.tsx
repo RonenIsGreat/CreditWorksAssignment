@@ -64,7 +64,7 @@ function VehiclesTable({
       sortBy: (a, b) => {
         const aa = a.manufacturer?.name ?? "--";
         const bb = b.manufacturer?.name ?? "--";
-        return aa.localeCompare(bb)
+        return aa.localeCompare(bb);
       },
     },
     {
@@ -89,7 +89,7 @@ function VehiclesTable({
       header: "Category Icon",
       renderItem: (vehicle: TableVehicle) => {
         const icon = vehicle.category?.icon;
-        return <CategoryIcon name={icon} />;
+        return <CategoryIcon name={icon ?? "--"} />;
       },
     },
   ];

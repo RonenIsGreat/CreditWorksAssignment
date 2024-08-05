@@ -25,9 +25,9 @@ Create table Categories (
 )
 Go
 
-Insert into Categories values ('Light', 0, 'Light')
-Insert into Categories values ('Medium', 500000, 'Medium')
-Insert into Categories values ('Heavy', 2500000, 'Heavy')
+Insert into Categories values ('Light', 0, 'clipIcon')
+Insert into Categories values ('Medium', 500000, 'brushIcon')
+Insert into Categories values ('Heavy', 2500000, 'compassIcon')
 Go
 
 Create table Vehicles (
