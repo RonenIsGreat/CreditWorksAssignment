@@ -17,7 +17,8 @@ public partial class CreditWorksContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         // This is the connection string to access the MSSQL server. Change the user id and password to your own
-        string connectionString = "Server=localhost; Database=CreditWorks_RonenRossin; User Id=sa; Password=YourStrong!Passw0rd; Trusted_Connection=true; MultipleActiveResultSets=true; TrustServerCertificate=true; integrated security=false;";
+        // Should move this to a configuration file
+        string connectionString = "User Id=sa; Password=YourStrong!Passw0rd; Server=localhost; Database=CreditWorks_RonenRossin; Trusted_Connection=true; MultipleActiveResultSets=true; TrustServerCertificate=true; integrated security=false;";
         optionsBuilder.UseSqlServer(connectionString);
     }
 

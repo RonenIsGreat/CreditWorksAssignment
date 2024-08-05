@@ -15,7 +15,11 @@ https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?vi
 
 Database setup:
 Run the script InitDatabase.sql to create CreditWorks_RonenRossin database with tables in MSSQL.
-Change the connection string in the backend to include your user and password to your MSSQL.
+
+Change the connection string in the backend to include your user and password to your MSSQL:
+1. Go to /backend/Models/CreditWorksContext.cs
+2. "OnConfiguring" method has connectionString variable.
+3. Update User Id and password to your local MSSQL user. 
 
 
 Backend setup:
