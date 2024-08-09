@@ -1,4 +1,4 @@
-import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useState } from "react";
 import { Manufacturer } from "../../../models/manufacturer";
 import ManufacturerService from "../../../services/manufacturerService";

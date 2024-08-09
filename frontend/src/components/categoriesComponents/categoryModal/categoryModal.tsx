@@ -1,4 +1,4 @@
-import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
+import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import { Category } from "../../../models/category";
 import { useState } from "react";
 import CategoryIcon from "../categoryIcon/categoryIcon";

@@ -4,10 +4,8 @@ import compassIcon from "../../../assets/icons/categoryIcons/compass-icon.png";
 import hammerIcon from "../../../assets/icons/categoryIcons/hammer-icon.png";
 import magnetIcon from "../../../assets/icons/categoryIcons/magnet-icon.png";
 
-type CategoryIconName = "brushIcon" | "clipIcon" | "compassIcon" | "hammerIcon" | "magnetIcon";
-
 interface CategoryIconProps {
-  name: string;
+  name: String;
   size?: number;
 }
 

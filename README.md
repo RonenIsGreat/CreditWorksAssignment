@@ -27,7 +27,7 @@ The application backend C# targeted to .net7 in "backend" directory.
 1. CD to the "backend" directory.
 2. Run "dotnet build" to build the project.
 3. Run "dotnet run" to run it.
-You can view and interact with the API with Swagger by accessing http://localhost:5454/
+You can view and interact with the API with Swagger by accessing http://localhost:5454/swagger
 
 
 Frontend setup:
