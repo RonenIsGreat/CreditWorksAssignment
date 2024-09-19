@@ -99,6 +99,7 @@ function VehicleModal({
 
           <Form.Label>Manufacturer:</Form.Label>
           <Form.Select
+            value={manufacturerId}
             onChange={(e) => {
               setManufacturerId(Number(e.target.value));
             }}

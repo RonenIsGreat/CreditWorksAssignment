@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace backend.Controllers
@@ -12,39 +13,39 @@ namespace backend.Controllers
     {
         // GET /Category
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public async Task<IEnumerable<Category>> Get()
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Categories.OrderBy(m => m.MinCategoryWeightGrams).ToList();
+                return await entities.Categories.OrderBy(m => m.MinCategoryWeightGrams).ToListAsync();
             }
         }
 
         // GET /Category/{id}
         [HttpGet("{id}")]
-        public Category? Get(int id)
+        public async Task<Category?> Get(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Categories.FirstOrDefault(e => e.CategoryId == id);
+                return await entities.Categories.FirstOrDefaultAsync(e => e.CategoryId == id);
             }
         }
 
         // POST /Category
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Category Category)
+        public async Task<HttpResponseMessage> Post([FromBody] Category Category)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
                 // Don't allow to have 2 categories with the same min weight
-                var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
+                var existingCategoryWithSameWeight = await entities.Categories.FirstOrDefaultAsync(e => e.MinCategoryWeightGrams == Category.MinCategoryWeightGrams);
                 if (existingCategoryWithSameWeight != null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.Conflict);
                 }
 
                 entities.Categories.Add(Category);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
 
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
@@ -52,11 +53,11 @@ namespace backend.Controllers
 
         // PUT /Category/{id}
         [HttpPut("{id}")]
-        public HttpResponseMessage Put(int id, [FromBody] Category updatedCategory)
+        public async Task<HttpResponseMessage> Put(int id, [FromBody] Category updatedCategory)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Category = entities.Categories.FirstOrDefault(e => e.CategoryId == id);
+                var Category = await entities.Categories.FirstOrDefaultAsync(e => e.CategoryId == id);
                 var message = new HttpResponseMessage();
                 if (Category == null)
                 {
@@ -70,7 +71,7 @@ namespace backend.Controllers
                 }
 
                 // Don't allow to have 2 categories with the same min weight
-                var existingCategoryWithSameWeight = entities.Categories.FirstOrDefault(e => e.CategoryId != updatedCategory.CategoryId &&
+                var existingCategoryWithSameWeight = await entities.Categories.FirstOrDefaultAsync(e => e.CategoryId != updatedCategory.CategoryId &&
                                                                                          e.MinCategoryWeightGrams == updatedCategory.MinCategoryWeightGrams);
                 if (existingCategoryWithSameWeight != null)
                 {
@@ -79,18 +80,18 @@ namespace backend.Controllers
                 Category.Name = updatedCategory.Name;
                 Category.MinCategoryWeightGrams = updatedCategory.MinCategoryWeightGrams;
                 Category.Icon = updatedCategory.Icon;
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
 
         // DELETE /Category/{id}
         [HttpDelete("{id}")]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Category = entities.Categories.FirstOrDefault(e => e.CategoryId == id);
+                var Category = await entities.Categories.FirstOrDefaultAsync(e => e.CategoryId == id);
                 var message = new HttpResponseMessage();
                 if (Category == null)
                 {
@@ -104,7 +105,7 @@ namespace backend.Controllers
                 }
 
                 entities.Categories.Remove(Category);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }

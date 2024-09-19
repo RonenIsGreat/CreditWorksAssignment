@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace backend.Controllers
@@ -12,11 +13,11 @@ namespace backend.Controllers
     {
         // GET /Vehicle
         [HttpGet]
-        public IEnumerable<Vehicle> Get()
+        public async Task<IEnumerable<Vehicle>> Get()
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Vehicles.ToList();
+                return await entities.Vehicles.ToArrayAsync();
             }
         }
 
@@ -32,23 +33,23 @@ namespace backend.Controllers
 
         // POST Vehicle
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Vehicle vehicle)
+        public async Task<HttpResponseMessage> Post([FromBody] Vehicle vehicle)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
                 entities.Vehicles.Add(vehicle);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
         }
 
         // PUT /Vehicle/{id}
         [HttpPut("{id}")]
-        public HttpResponseMessage Put(int id, [FromBody] Vehicle updatedVehicle)
+        public async Task<HttpResponseMessage> Put(int id, [FromBody] Vehicle updatedVehicle)
         {
-            using (CreditWorksContext entities = new CreditWorksContext())
+            using (CreditWorksContext context = new CreditWorksContext())
             {
-                var vehicle = entities.Vehicles.FirstOrDefault(e => e.VehicleId == id);
+                var vehicle = context.Vehicles.FirstOrDefault(e => e.VehicleId == id);
                 var message = new HttpResponseMessage();
                 if (vehicle == null)
                 {
@@ -58,14 +59,14 @@ namespace backend.Controllers
                 vehicle.ManufacturerId = updatedVehicle.ManufacturerId;
                 vehicle.Year = updatedVehicle.Year;
                 vehicle.WeightInGrams = updatedVehicle.WeightInGrams;
-                entities.SaveChanges();
+                await context.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
 
         // DELETE /Vehicle/{id}
         [HttpDelete("{id}")]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
@@ -76,7 +77,7 @@ namespace backend.Controllers
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
                 entities.Vehicles.Remove(vehicle);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }

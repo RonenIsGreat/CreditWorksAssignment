@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace backend.Controllers
@@ -12,71 +13,72 @@ namespace backend.Controllers
     {
         // GET /Manufacturer
         [HttpGet]
-        public IEnumerable<Manufacturer> Get()
+        public async Task<IEnumerable<Manufacturer>> Get()
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.ToList();
+                return await entities.Manufacturers.ToListAsync();
             }
         }
 
         // GET /Manufacturer/{id}
         [HttpGet("{id}")]
-        public Manufacturer? Get(int id)
+        public async Task<Manufacturer?> Get(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                return entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
+                return await entities.Manufacturers.FirstOrDefaultAsync(e => e.ManufacturerId == id);
             }
         }
 
         // POST /Manufacturer
         [HttpPost]
-        public HttpResponseMessage Post([FromBody] Manufacturer Manufacturer)
+        public async Task<HttpResponseMessage> Post([FromBody] Manufacturer Manufacturer)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
                 entities.Manufacturers.Add(Manufacturer);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
         }
 
         // PUT /Manufacturer/{id}
         [HttpPut("{id}")]
-        public HttpResponseMessage Put(int id, [FromBody] Manufacturer updatedManufacturer)
+        public async Task<HttpResponseMessage> Put(int id, [FromBody] Manufacturer updatedManufacturer)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
+                var Manufacturer = await entities.Manufacturers.FirstOrDefaultAsync(e => e.ManufacturerId == id);
                 if (Manufacturer == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
                 Manufacturer.Name = updatedManufacturer.Name;
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
 
         // DELETE /Manufacturer/{id}
         [HttpDelete("{id}")]
-        public HttpResponseMessage Delete(int id)
+        public async Task<HttpResponseMessage> Delete(int id)
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var Manufacturer = entities.Manufacturers.FirstOrDefault(e => e.ManufacturerId == id);
+                var Manufacturer = await entities.Manufacturers.FirstOrDefaultAsync(e => e.ManufacturerId == id);
                 if (Manufacturer == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
-                var VehicleWithCategory = entities.Vehicles.FirstOrDefault(v => v.ManufacturerId == Manufacturer.ManufacturerId);
+                
+                var VehicleWithCategory = entities.Vehicles.FirstOrDefaultAsync(v => v.ManufacturerId == Manufacturer.ManufacturerId);
                 if (VehicleWithCategory != null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.Conflict);
                 }
                 entities.Manufacturers.Remove(Manufacturer);
-                entities.SaveChanges();
+                await entities.SaveChangesAsync();
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
         }
