@@ -72,7 +72,7 @@ namespace backend.Controllers
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
                 }
                 
-                var VehicleWithCategory = entities.Vehicles.FirstOrDefaultAsync(v => v.ManufacturerId == Manufacturer.ManufacturerId);
+                var VehicleWithCategory = await entities.Vehicles.FirstOrDefaultAsync(v => v.ManufacturerId == Manufacturer.ManufacturerId);
                 if (VehicleWithCategory != null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.Conflict);

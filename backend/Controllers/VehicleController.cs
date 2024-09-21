@@ -49,7 +49,7 @@ namespace backend.Controllers
         {
             using (CreditWorksContext context = new CreditWorksContext())
             {
-                var vehicle = context.Vehicles.FirstOrDefault(e => e.VehicleId == id);
+                var vehicle = await context.Vehicles.FindAsync(id);
                 var message = new HttpResponseMessage();
                 if (vehicle == null)
                 {
@@ -70,7 +70,7 @@ namespace backend.Controllers
         {
             using (CreditWorksContext entities = new CreditWorksContext())
             {
-                var vehicle = entities.Vehicles.FirstOrDefault(e => e.VehicleId == id);
+                var vehicle = await entities.Vehicles.FirstOrDefaultAsync(e => e.VehicleId == id);
                 var message = new HttpResponseMessage();
                 if (vehicle == null)
                 {
